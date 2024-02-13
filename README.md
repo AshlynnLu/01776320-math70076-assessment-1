@@ -1,2 +1,4 @@
 # mat70076-assessment-1
-Colorado cannabis sales reports
+# Legal cannabis sales reports
+
+Analyse cannabis sales report data in Colorado.
