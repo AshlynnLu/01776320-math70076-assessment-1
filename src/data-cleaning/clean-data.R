@@ -47,4 +47,42 @@ data_county <- data_non_NR_NA %>%
   filter(County != 'Total') %>%
   mutate(Total_Sale = Medical + Retail)
 
+# Longer form
+data_county_longer <- data_county %>%
+  tidyr::pivot_longer(cols = c('Medical', 'Retail'),
+                      names_to = "Sales_Type", values_to = "Sales")
 
+
+# Compute the proportion of each County sales contribute to the total year sales
+data_county_total_year_sale <- data_county %>%
+  group_by(Year, County) %>%
+  summarise(Total_Year_Sale = sum(Total_Sale)) %>%
+  ungroup(County) %>%
+  mutate(Prop = Total_Year_Sale/sum(Total_Year_Sale))
+
+# Filter the top 4 counties with the largest proportions
+top_4_counties <- data_county_total_year_sale %>%
+  group_by(Year) %>%
+  top_n(4, wt = Prop) %>%
+  ungroup()
+
+# Summarize the remaining proportions and combine them into "Other"
+other_county <- data_county_total_year_sale %>%
+  group_by(Year) %>%
+  anti_join(top_4_counties, by = "County") %>%
+  summarise(County = "Other",
+            Prop = sum(Prop),
+            Total_Year_Sale = sum(Total_Year_Sale))
+
+# Combine the top 5 counties and "Other"
+combined_county <- bind_rows(top_4_counties, other_county)
+
+# Normalize the proportions within each year
+combined_county <- combined_county %>%
+  group_by(Year) %>%
+  mutate(Prop = Prop / sum(Prop))
+
+order = c("Adams", "Arapahoe", "Boulder", "Denver", "Jefferson", "Pueblo", "Other")
+
+combined_county <- combined_county %>%
+  mutate(County = factor(County, levels = order))
