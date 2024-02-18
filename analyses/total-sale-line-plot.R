@@ -14,9 +14,15 @@ library(ggthemes)
 
 source("CMYK_to_hexadecimal.R")
 
-line_color1 <- CMYK_to_hexadecimal(90, 50, 15, 5)
-line_color2 <- CMYK_to_hexadecimal(67, 0, 18, 0)
-line_color3 <- CMYK_to_hexadecimal(12, 30, 70, 0)
+BLUE <- "#006BA2"
+CYAN <- "#3EBCD2"
+YELLOW <- "#EBB434"
+GREEN <- "#379A8B"
+DARK_RED <- CMYK_to_hexadecimal(0, 75, 35, 45)
+LIGHT_GREEN <- "#86E5D4"
+OTHER1 <- "#E9EDF0"
+OTHER2 <- "#B7C6CF"
+
 background_color <- CMYK_to_hexadecimal(7.5, 0, 0, 5)
 grid_color <- CMYK_to_hexadecimal(10, 0, 0, 25)
 
@@ -27,13 +33,13 @@ line_labels <- data.frame(
   color = c(line_color1, line_color2, line_color3)
 )
 
-plot <- data_total_sale %>%
+data_total_sale %>%
   ggplot() +
   geom_line(aes(x = Year_Month, y = Total_Sale/1e6, color = "Total Sale"), show.legend = TRUE) +
   geom_line(aes(x = Year_Month, y = Medical/1e6, color = "Medical"), show.legend = TRUE) +
   geom_line(aes(x = Year_Month, y = Retail/1e6, color = "Retail"), show.legend = TRUE) +
-  scale_color_manual(values = c("Total Sale" = line_color1, "Medical" = line_color2, "Retail" = line_color3)) +
-  theme_economist(base_family = "sans") +
+  scale_color_manual(values = c("Total Sale" = BLUE, "Medical" = CYAN, "Retail" = YELLOW)) +
+  theme_economist_white(base_family = "sans", gray_bg = FALSE) +
   scale_color_economist() +
   theme(
     # Remove the title for both axes
@@ -41,7 +47,6 @@ plot <- data_total_sale %>%
     # Adjust grid line color
     panel.grid.major.y = element_line(color = grid_color, size = 0.5),
     legend.text = element_text(size = 7.5/.pt, family = "Econ Sans Cnd")
-
   )
 
 
