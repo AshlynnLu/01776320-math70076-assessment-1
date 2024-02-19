@@ -12,26 +12,7 @@ library(ggthemes)
 
 #data_non_NR_NA <- readRDS(data_non_NR_NA)
 
-source("CMYK_to_hexadecimal.R")
-
-BLUE <- "#006BA2"
-CYAN <- "#3EBCD2"
-YELLOW <- "#EBB434"
-GREEN <- "#379A8B"
-DARK_RED <- CMYK_to_hexadecimal(0, 75, 35, 45)
-LIGHT_GREEN <- "#86E5D4"
-OTHER1 <- "#E9EDF0"
-OTHER2 <- "#B7C6CF"
-
-background_color <- CMYK_to_hexadecimal(7.5, 0, 0, 5)
-grid_color <- CMYK_to_hexadecimal(10, 0, 0, 25)
-
-line_labels <- data.frame(
-  labels = c("Total", "Medical", "Retail"),
-  x = as.Date(c(16000, 16500, 19020)),
-  y = c(90, 20, 90),
-  color = c(line_color1, line_color2, line_color3)
-)
+source("analyses/color-setting.R")
 
 data_total_sale %>%
   ggplot() +
@@ -39,23 +20,26 @@ data_total_sale %>%
   geom_line(aes(x = Year_Month, y = Medical/1e6, color = "Medical"), show.legend = TRUE) +
   geom_line(aes(x = Year_Month, y = Retail/1e6, color = "Retail"), show.legend = TRUE) +
   scale_color_manual(values = c("Total Sale" = BLUE, "Medical" = CYAN, "Retail" = YELLOW)) +
-  theme_economist_white(base_family = "sans", gray_bg = FALSE) +
-  scale_color_economist() +
+  # Make the y grid values to the right
+  scale_y_continuous(position = "right") +
+  # Title, subtitle, source, and legend title
+  labs(title = "Marijuana Sales",
+       subtitle = "Colorado, 2014 to 2024, $m",
+       caption = "Source: the Colorado Department of Revenue",
+       color = "Sales type") +
   theme(
-    # Remove the title for both axes
-    axis.title = element_blank(),
-    # Adjust grid line color
-    panel.grid.major.y = element_line(color = grid_color, size = 0.5),
-    legend.text = element_text(size = 7.5/.pt, family = "Econ Sans Cnd")
-  )
-
-
-
-  theme(
+    # Text font
+    text = element_text(family = "Econ Sans Cnd"),
+    # Plot title
+    plot.title = element_text(size = 9.5, face = "bold"),
+    # Subtitle
+    plot.subtitle = element_text(size = 8),
+    # Source
+    plot.caption = element_markdown(size = 6.5, hjust = 0, color = source_color),
     # Remove the title for both axes
     axis.title = element_blank(),
     # Set background color to white
-    panel.background = element_rect(fill = background_color),
+    panel.background = element_rect(fill = "white"),
     # Remove all grid lines
     panel.grid = element_blank(),
     # Add grid lines for the vertical axis, customizing color and size
@@ -64,30 +48,23 @@ data_total_sale %>%
     axis.ticks.length.y = unit(0, "pt"),
     # Keep tick marks on horizontal axis
     axis.ticks.length.x = unit(3, "pt"),
+    # Make vertical grid values on top of the grid line, adjust font size
+    axis.text.y = element_text(size = 7, vjust = 0),
     # Font size of the axis label
-    axis.text.x = element_text(size = 7/.pt),
+    axis.text.x = element_text(size = 7),
     # Only the bottom line of the vertical axis is painted in black
-    axis.line.x.bottom = element_line(color = "black"),
-    # Remove labels from the vertical axis
-    axis.text.y = element_blank(),
+    axis.line.x.bottom = element_line(color = "black", size = 0.4),
     # Adjust legend position
     legend.position = "top",
-    # Adjust legend background
-    legend.background = element_rect(fill = background_color),
     # Adjust background underneath legend keys
-    legend.key = element_rect(fill = background_color),
-    legend.text = element_text(size = 7.5/.pt, family = "Econ Sans Cnd", face = "light")
-  ) +
-  new_scale_color() +
-  geom_shadowtext(
-    aes(x, y, label = labels, color = color),
-    data = line_labels,
-    hjust = 0, # Align to the left
-    bg.colour = background_color, # Shadow color (or background color)
-    size = 7.5/.pt
-  ) +
-  scale_color_identity() # Use the colors in the 'color' variable as they are.
-
-
+    legend.key = element_rect(fill = "white"),
+    # Adjust legend text size
+    legend.text = element_text(size = 7.5),
+    # Align legend to left
+    legend.justification = c(0, 2)
+    )  +
+  # Adjust legend position to the right and adjust font size
+  guides(color = guide_legend(title.position = "top",
+                              title.theme = element_text(hjust = 0, size = 7.5)))
 
 
