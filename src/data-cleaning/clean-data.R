@@ -2,7 +2,7 @@
 library(dplyr)
 
 # Load raw data
-data_raw <- read.csv("data/raw/Marijuana_Sales_By_County_2014_To_Date_Report_County_Report.csv",
+data_raw <- read.csv("~/Desktop/MSc/spring/DS/01776320-math70076-assessment-1/data/raw/Marijuana_Sales_By_County_2014_To_Date_Report_County_Report.csv",
                  skip = 4, header = TRUE)
 data_raw <- data_raw[1:5035, ]
 
@@ -34,19 +34,15 @@ data_non_NR_NA <- data_raw %>%
   mutate(Medical = as.integer(gsub("\\$|,", "", Medical)),
          Retail = as.integer(gsub("\\$|,", "", Retail)))
 
-save(data_non_NR_NA, file = "data/derived/data_non_NR_NA.RData")
+save(data_non_NR_NA, file = "data_non_NR_NA.RData")
 
-################################################################################
-# Total sale for drawing line plot
+# Total sale
 data_total_sale <- data_non_NR_NA %>%
   filter(County == 'Total') %>%
   mutate(Total_Sale = Medical + Retail) %>%
   select(-County)
 
-save(data_total_sale, file = "data/derived/data_total_sale.RData")
-
-################################################################################
-# County data for donut chart
+# County data
 data_county <- data_non_NR_NA %>%
   filter(County != 'Total') %>%
   mutate(Total_Sale = Medical + Retail)
@@ -86,18 +82,7 @@ combined_county <- combined_county %>%
   group_by(Year) %>%
   mutate(Prop = Prop / sum(Prop))
 
-order = c("Denver", "Arapahoe", "Boulder", "Adams", "Jefferson", "Pueblo", "Other")
+order = c("Adams", "Arapahoe", "Boulder", "Denver", "Jefferson", "Pueblo", "Other")
 
 combined_county <- combined_county %>%
   mutate(County = factor(County, levels = order))
-
-# Save
-save(combined_county, file = "data/derived/combined_county.RData")
-
-# Calculate total sales grouped by year
-total_sales_by_year <- combined_county %>%
-  group_by(Year) %>%
-  summarize(Total_Sales = sum(Total_Year_Sale))
-
-# Save
-save(total_sales_by_year, file = "data/derived/total_sales_by_year.RData")
