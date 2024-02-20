@@ -25,8 +25,8 @@ red_box_on_top <- function(){
   grid.rect(
     x = 0,
     y = 1,
-    width = 0.05,
-    height = 0.025,
+    width = unit(15, "pt"),
+    height = unit(5, "pt"),
     just = c("left", "top"),
     gp = gpar(fill = "#e5001c", lwd = 0)
   )
