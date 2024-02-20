@@ -74,6 +74,7 @@ pop_map
 
 # Add red box
 red_box_on_top()
+
 # Close connection
 dev.off()
 

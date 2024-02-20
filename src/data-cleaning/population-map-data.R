@@ -29,4 +29,6 @@ merged_pop$category <- cut(merged_pop$pop,
                            breaks = breaks, labels = labels, include.lowest = TRUE)
 
 # Save
-save(merged_pop, file = "data/derived/merged_pop.RData")
+save(colorado, file = "data/derived/colorado.RData")
+save(colorado_county, file = "data/derived/colorado-county.RData")
+save(merged_pop, file = "data/derived/merged-pop.RData")
