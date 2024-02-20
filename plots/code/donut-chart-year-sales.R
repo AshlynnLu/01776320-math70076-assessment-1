@@ -41,12 +41,12 @@ county_sales_donut_chart <- ggplot() +
     # Plot title
     plot.title = element_text(size = 9.5, face = "bold"),
     # Subtitle
-    plot.subtitle = element_text(size = 8, margin = margin(11/.pt, 0, 0, 0)),
+    plot.subtitle = element_text(size = 8, margin = margin(3, 0, 0, 0, unit = "pt")),
     # Source
     plot.caption = element_text(size = 6.5, hjust = 0,
-                                    family = "Econ Sans Cnd Light",
-                                    color = source_color,
-                                    margin = margin(10/.pt, 0, 0, 0)),
+                                family = "Econ Sans Cnd Light",
+                                color = source_color,
+                                margin = margin(3.5, 0, 0, 0, unit = "pt")),
     # Set background color to white
     plot.background = element_rect(fill = "white", color = "white"),
     # Adjust legend key size
@@ -59,12 +59,12 @@ county_sales_donut_chart <- ggplot() +
     legend.text = element_text(size = 7.5, family = "Econ Sans Cnd Light"),
     # Adjust the size of facet titles (year titles)
     strip.text = element_text(size = 8, family = "Econ Sans Cnd",
-                              margin = margin(15/.pt,0, -5/.pt, 0), hjust = 0),
+                              margin = margin(7.5, 0, -15, 0, unit = "pt"), hjust = 0),
     strip.clip = "off",
     # Make the facet closer
     panel.spacing = unit(-1, "pt"),
     # Adjust plot margin
-    plot.margin = margin(17, 0, 5, 0, unit = "pt")
+    plot.margin = margin(7.5, 0, 5, 0, unit = "pt")
   )
 
 # Open file to store the plot

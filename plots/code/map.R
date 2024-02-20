@@ -12,31 +12,36 @@ source("plots/code/color-setting.R")
 source("src/helper-functions/add-watermark.R")
 
 # Load data
-load("data/derived/merged_pop.RData")
-
+load("data/derived/colorado.RData")
+load("data/derived/colorado-county.RData")
+load("data/derived/merged-pop.RData")
 
 pop_map <- ggplot(data = colorado, mapping = aes(x = long, y = lat, group = group)) +
   geom_polygon(data = colorado_county, fill = NA, color = "white") +
-  geom_polygon(data = Merged_pop,
+  geom_polygon(data = merged_pop,
                aes(x = long, y = lat, group = group, fill = category),
                color = "white", size = 0.2) +
+  # geom_text(data = centroids_df, aes(x = long, y = lat, label = subregion), size = 3) +
+  # xlim(-106.3, -103) +
+  # ylim(37.72927, 41.02) +
+  coord_fixed(1.3) +
   ggtitle('Colorado Map with Counties') +
   scale_fill_manual(name = 'Population',
                     values = BLUES)+
   labs(title = "Population",
-       subtitle = "Colorado, 2015, k",
+       subtitle = "Colorado, 2020, k",
        caption = "Source: the Colorado State Demography Office",
        fill = "Population") +
   theme(
     # Plot title
     plot.title = element_text(size = 9.5, face = "bold"),
     # Subtitle
-    plot.subtitle = element_text(size = 8, margin = margin(11, 0, 0, 0)),
+    plot.subtitle = element_text(size = 8, margin = margin(3, 0, 0, 0, unit = "pt")),
     # Source
     plot.caption = element_text(size = 6.5, hjust = 0,
                                 family = "Econ Sans Cnd Light",
                                 color = source_color,
-                                margin = margin(10, 0, 0, 0)),
+                                margin = margin(3.5, 0, 0, 0, unit = "pt")),
     # Set background color to white
     panel.background = element_rect(fill = "white", color = "white"),
     # Remove the title for both axes
@@ -49,9 +54,12 @@ pop_map <- ggplot(data = colorado, mapping = aes(x = long, y = lat, group = grou
     axis.text.y = element_blank(),
     # Adjust legend position
     legend.position = "top",
-    legend.margin = margin(15, 0,  0,  0),
+    legend.margin = margin(7.5, 0,  0,  0, unit = "pt"),
     # Adjust background underneath legend keys
     legend.key = element_rect(fill = "white"),
+    # Adjust legend title font
+    legend.title = element_text(size = 7.5,
+                                family = "Econ Sans Cnd Medium"),
     # Adjust legend text size
     legend.text = element_text(size = 7.5, family = "Econ Sans Cnd Light"),
     # Adjust legend key size
@@ -59,16 +67,12 @@ pop_map <- ggplot(data = colorado, mapping = aes(x = long, y = lat, group = grou
     # Align legend to left
     legend.justification = c(0, 2),
     # Adjust plot margin
-    plot.margin = margin(17, 0, 5, 0, unit = "pt")
-  )  +
-  # Adjust legend position to the right and adjust font size
-  guides(color = guide_legend(title.position = "left",
-                              title.theme = element_text(size = 7.5,
-                                                         family = "Econ Sans Cnd Medium")))
+    plot.margin = margin(7.5, 0, 5, 0, unit = "pt")
+  )
 
 # Open file to store the plot
 png("plots/figure/pop-map-plot.png",
-    width = 290*4, height = 290*4, units = "px", res = 300)
+    width = 290*4.5, height = 290*4.5, units = "px", res = 300)
 
 pop_map
 

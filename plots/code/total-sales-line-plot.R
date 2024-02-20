@@ -32,12 +32,12 @@ total_sales_line_plot <- data_total_sale %>%
     # Plot title
     plot.title = element_text(size = 9.5, face = "bold"),
     # Subtitle
-    plot.subtitle = element_text(size = 8, margin = margin(11, 0, 0, 0)),
+    plot.subtitle = element_text(size = 8, margin = margin(3, 0, 0, 0, unit = "pt")),
     # Source
     plot.caption = element_text(size = 6.5, hjust = 0,
                                 family = "Econ Sans Cnd Light",
                                 color = source_color,
-                                margin = margin(10, 0, 0, 0)),
+                                margin = margin(3.5, 0, 0, 0, unit = "pt")),
     # Remove the title for both axes
     axis.title = element_blank(),
     # Set background color to white
@@ -58,20 +58,18 @@ total_sales_line_plot <- data_total_sale %>%
     axis.line.x.bottom = element_line(color = "black", size = 0.4),
     # Adjust legend position
     legend.position = "top",
-    legend.margin = margin(15, 0,  0,  0),
+    legend.margin = margin(7.5, 0,  0, 0, unit = "pt"),
     # Adjust background underneath legend keys
     legend.key = element_rect(fill = "white"),
     # Adjust legend text size
     legend.text = element_text(size = 7.5, family = "Econ Sans Cnd Light"),
+    # Adjust legend title
+    legend.title = element_text(size = 7.5, family = "Econ Sans Cnd Medium"),
     # Align legend to left
     legend.justification = c(0, 2),
     # Adjust plot margin
-    plot.margin = margin(17, 0, 5, 0, unit = "pt")
-    )  +
-  # Adjust legend position to the right and adjust font size
-  guides(color = guide_legend(title.position = "top",
-                              title.theme = element_text(hjust = 0, size = 7.5,
-                                                         family = "Econ Sans Cnd Medium")))
+    plot.margin = margin(7.5, 0, 5, 0, unit = "pt")
+    )
 
 # Open file to store the plot
 png("plots/figure/total-sales-line-plot.png",
