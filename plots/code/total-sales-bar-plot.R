@@ -79,6 +79,7 @@ total_sales_bar_plot
 
 # Add red box
 red_box_on_top()
+
 # Close connection
 dev.off()
 
