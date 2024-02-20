@@ -1,22 +1,21 @@
 # Load necessary libraries
 library(ggplot2)
-library(grid)
-library(ggnewscale)
 library(ggtext)
 library(tidyverse)
-library(shadowtext)
-library(patchwork)
 library(dplyr)
+library(grid)
 library(gridExtra)
-library(ggthemes)
 
 # Load colors
 source("plots/code/color-setting.R")
+# Load function to add watermark
+source("src/helper-functions/add-watermark.R")
+
 # Load data
 load("data/derived/data_total_sale.RData")
 
 # Line plot
-total_sale_line_plot <- data_total_sale %>%
+total_sales_line_plot <- data_total_sale %>%
   ggplot() +
   geom_line(aes(x = Year_Month, y = Total_Sale/1e6, color = "Total Sale"), show.legend = TRUE) +
   geom_line(aes(x = Year_Month, y = Medical/1e6, color = "Medical"), show.legend = TRUE) +
@@ -25,22 +24,20 @@ total_sale_line_plot <- data_total_sale %>%
   # Make the y grid values to the right
   scale_y_continuous(position = "right") +
   # Title, subtitle, source, and legend title
-  labs(title = "Marijuana Sales",
+  labs(title = "Cannabis sales",
        subtitle = "Colorado, 2014 to 2024, $m",
        caption = "Source: the Colorado Department of Revenue",
        color = "Sales type") +
   theme(
-    # Text font
-    text = element_text(family = "Econ Sans Cnd"),
     # Plot title
-    plot.title = element_text(size = 9.5, family = "Econ Sans Cnd", face = "bold"),
+    plot.title = element_text(size = 9.5, face = "bold"),
     # Subtitle
-    plot.subtitle = element_text(size = 8, margin = margin(11/.pt, 0, 0, 0)),
+    plot.subtitle = element_text(size = 8, margin = margin(11, 0, 0, 0)),
     # Source
-    plot.caption = element_markdown(size = 6.5, hjust = 0,
-                                    family = "Econ Sans Cnd Light",
-                                    color = source_color,
-                                    margin = margin(10/.pt, 0, 0, 0)),
+    plot.caption = element_text(size = 6.5, hjust = 0,
+                                family = "Econ Sans Cnd Light",
+                                color = source_color,
+                                margin = margin(10, 0, 0, 0)),
     # Remove the title for both axes
     axis.title = element_blank(),
     # Set background color to white
@@ -48,7 +45,7 @@ total_sale_line_plot <- data_total_sale %>%
     # Remove all grid lines
     panel.grid = element_blank(),
     # Add grid lines for the vertical axis, customizing color and size
-    panel.grid.major.y = element_line(color = grid_color, size = 0.5),
+    panel.grid.major.y = element_line(color = grid_color, linewidth = unit(0.5, "pt")),
     # Remove tick marks on the vertical axis
     axis.ticks.length.y = unit(0, "pt"),
     # Keep tick marks on horizontal axis
@@ -61,20 +58,29 @@ total_sale_line_plot <- data_total_sale %>%
     axis.line.x.bottom = element_line(color = "black", size = 0.4),
     # Adjust legend position
     legend.position = "top",
-    legend.margin = margin(15/.pt, 0,  0,  0),
+    legend.margin = margin(15, 0,  0,  0),
     # Adjust background underneath legend keys
     legend.key = element_rect(fill = "white"),
     # Adjust legend text size
     legend.text = element_text(size = 7.5, family = "Econ Sans Cnd Light"),
     # Align legend to left
-    legend.justification = c(0, 2)
+    legend.justification = c(0, 2),
+    # Adjust plot margin
+    plot.margin = margin(17, 0, 5, 0, unit = "pt")
     )  +
   # Adjust legend position to the right and adjust font size
   guides(color = guide_legend(title.position = "top",
                               title.theme = element_text(hjust = 0, size = 7.5,
                                                          family = "Econ Sans Cnd Medium")))
 
-# Save as png
-ggsave("plots/figure/total-sale-line-plot.png", total_sale_line_plot,
-       scale = 3, dpi = 300,
-       width = 595, height = 290, units = "px")
+# Open file to store the plot
+png("plots/figure/total-sales-line-plot.png",
+    width = 595*3, height = 290*3, units = "px", res = 300)
+
+total_sales_line_plot
+
+# Add red box
+red_box_on_top()
+
+# Close connection
+dev.off()

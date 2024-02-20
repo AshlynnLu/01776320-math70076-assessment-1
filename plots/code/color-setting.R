@@ -14,3 +14,7 @@ OTHER2 <- "#B7C6CF"
 background_color <- CMYK_to_hexadecimal(7.5, 0, 0, 5)
 grid_color <- CMYK_to_hexadecimal(10, 0, 0, 25)
 source_color <- CMYK_to_hexadecimal(0, 0, 0, 75)
+
+# color scales
+BLUES <- c("#00588D", "#1270A8", "#3D89C3", "#5DA4DF", "#7BBFFC", "#98DAFF")
+
