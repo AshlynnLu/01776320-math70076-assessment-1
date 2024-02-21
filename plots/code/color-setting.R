@@ -1,5 +1,5 @@
 # Import the helper function
-source("src/helper-functions/CMYK_to_hexadecimal.R")
+source("src/helper-functions/CMYK-to-hexadecimal.R")
 
 # Colors used in plotting
 BLUE <- "#006BA2"
