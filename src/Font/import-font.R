@@ -1,15 +1,18 @@
+# Import packages
 library(extrafont)
 library(showtext)
 
+# Add font
 font_add(family = "Econ Sans Cnd",
          regular = "econsanscndreg-webfont.woff.ttf",
-         bold = "econsans-subset-cd-bd.woff.ttf")
+         bold = "econsans-condensed-primary-subset-bd.ttf")
 font_add(family = "Econ Sans Cnd Light",
-         "econsans-subset-cd-li.woff.ttf")
+         regular = "econsans-subset-cd-li.woff.ttf")
 font_add(family = "Econ Sans Cnd Medium",
-         "econsans-subset-cd-md.woff.ttf")
-font_add(family = "Econ Sans Cnd Bold",
-         "econsans-condensed-primary-subset-bd.ttf")
+         regular = "econsanscndmed-webfont.woff.ttf")
+font_add(family = "Econ Sans Bold",
+         regular = "SourceSansProBold.ttf")
 
+# Load into R
 loadfonts()
 
