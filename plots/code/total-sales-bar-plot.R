@@ -78,7 +78,7 @@ total_sales_bar_plot <- ggplot(combined_county_longer) +
                                                          family = "Econ Sans Cnd Medium")))
 
 # Open file to store the plot
-png("plots/figure/total-sale-bar-plot.png",
+png("plots/figure/total-sales-bar-plot.png",
     width = 290*3, height = 290/2*3*3, units = "px", res = 300)
 total_sales_bar_plot
 
