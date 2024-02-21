@@ -5,7 +5,7 @@ library(maps)
 library(sf)
 
 # Load population data
-pop_data <- read_xlsx("data/raw/Colorado-population.xlsx", skip = 2)[2:65,c(2, 4)]
+pop_data <- read_xlsx("data/raw/colorado-population.xlsx", skip = 2)[2:65,c(2, 4)]
 
 colnames(pop_data) <- c("subregion", "pop")
 
