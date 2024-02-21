@@ -2,7 +2,7 @@
 library(dplyr)
 
 # Load raw data
-data_raw <- read.csv("data/raw/Marijuana_Sales_By_County_2014_To_Date_Report_County_Report.csv",
+data_raw <- read.csv("data/raw/marijuana-sales-by-county-2014_to-date_report.csv",
                  skip = 4, header = TRUE)
 data_raw <- data_raw[1:5035, ]
 
@@ -34,7 +34,7 @@ data_non_NR_NA <- data_raw %>%
   mutate(Medical = as.integer(gsub("\\$|,", "", Medical)),
          Retail = as.integer(gsub("\\$|,", "", Retail)))
 
-save(data_non_NR_NA, file = "data/derived/data_non_NR_NA.RData")
+save(data_non_NR_NA, file = "data/derived/data-non-NR-NA.RData")
 
 ################################################################################
 # Total sale for drawing line plot
@@ -43,7 +43,7 @@ data_total_sale <- data_non_NR_NA %>%
   mutate(Total_Sale = Medical + Retail) %>%
   select(-County)
 
-save(data_total_sale, file = "data/derived/data_total_sale.RData")
+save(data_total_sale, file = "data/derived/data-total-sale.RData")
 
 ################################################################################
 # County data for donut chart
@@ -91,7 +91,7 @@ combined_county <- combined_county %>%
   mutate(County = factor(County, levels = top_counties))
 
 # Save
-save(combined_county, file = "data/derived/combined_county.RData")
+save(combined_county, file = "data/derived/combined-county.RData")
 
 # Calculate total sales grouped by year
 total_sales_by_year <- combined_county %>%
@@ -99,7 +99,7 @@ total_sales_by_year <- combined_county %>%
   summarize(Total_Sales = sum(Total_Year_Sale))
 
 # Save
-save(total_sales_by_year, file = "data/derived/total_sales_by_year.RData")
+save(total_sales_by_year, file = "data/derived/total-sales-by-year.RData")
 
 ################################################################################
 # County data for bar chart
@@ -137,7 +137,8 @@ bar_plot_order = c("Other", "Jefferson", "Pueblo", "Larimer",
                    "Boulder", "Adams", "Arapahoe", "Denver")
 
 combined_county_longer <- combined_county_longer %>%
-  mutate(County = factor(County, levels =bar_plot_order))
+  mutate(County = factor(County, levels = bar_plot_order))
 
 # Save
-save(combined_county_longer, file = "data/derived/combined_county_longer.RData")
+save(combined_county_longer, file = "data/derived/combined-county-longer.RData")
+

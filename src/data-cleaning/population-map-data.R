@@ -1,6 +1,8 @@
+# Load necessary libraries
 library(readxl)
 library(dplyr)
 library(maps)
+library(sf)
 
 # Load population data
 pop_data <- read_xlsx("data/raw/Colorado-population.xlsx", skip = 2)[2:65,c(2, 4)]
@@ -26,7 +28,9 @@ breaks <- c(0, 200e3, 400e3, 600e3, Inf)
 labels <- c("[0, 200]", "(200, 400]", "(400, 600]", "(600, Inf)")
 
 merged_pop$category <- cut(merged_pop$pop,
-                           breaks = breaks, labels = labels, include.lowest = TRUE)
+                           breaks = breaks,
+                           labels = labels,
+                           include.lowest = TRUE)
 
 # Save
 save(colorado, file = "data/derived/colorado.RData")
