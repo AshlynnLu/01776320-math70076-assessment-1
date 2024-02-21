@@ -12,7 +12,7 @@ The article includes:
 
 ## To reproduce
 
-Clone or download this repo
+Clone or download this repo.
 
 The code and analysis are structured as follows:
 
@@ -35,6 +35,10 @@ This directory contains the data cleaning process and helper functions.
 This directory contains the figures used in the article, and the code used to produce the plots. 
 
 Figures are made following the style guidelines of The Economist as closely as possible.
+
+## tests/
+
+This directory contains the tests for each helper functions.
 
 ## report/
 
