@@ -21,14 +21,11 @@ pop_map <- ggplot(data = colorado, mapping = aes(x = long, y = lat, group = grou
   geom_polygon(data = merged_pop,
                aes(x = long, y = lat, group = group, fill = category),
                color = "white", size = 0.2) +
-  # geom_text(data = centroids_df, aes(x = long, y = lat, label = subregion), size = 3) +
-  # xlim(-106.3, -103) +
-  # ylim(37.72927, 41.02) +
   coord_fixed(1.3) +
-  ggtitle('Colorado Map with Counties') +
-  scale_fill_manual(name = 'Population',
-                    values = BLUES)+
-  labs(title = "Population",
+  # Manually adjust the color of legend
+  scale_fill_manual(name = 'Population', values = BLUES) +
+  # Title, subtitle, source, and legend title
+  labs(title = "Population map with counties",
        subtitle = "Colorado, 2020, k",
        caption = "Source: the Colorado State Demography Office",
        fill = "Population") +
@@ -58,8 +55,7 @@ pop_map <- ggplot(data = colorado, mapping = aes(x = long, y = lat, group = grou
     # Adjust background underneath legend keys
     legend.key = element_rect(fill = "white"),
     # Adjust legend title font
-    legend.title = element_text(size = 7.5,
-                                family = "Econ Sans Cnd Medium"),
+    legend.title = element_text(size = 7.5, family = "Econ Sans Cnd Medium"),
     # Adjust legend text size
     legend.text = element_text(size = 7.5, family = "Econ Sans Cnd Light"),
     # Adjust legend key size

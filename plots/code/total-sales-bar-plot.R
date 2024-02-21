@@ -23,6 +23,7 @@ total_sales_bar_plot <- ggplot(combined_county_longer) +
        subtitle = "Colorado, 2014 to 2024, $bn",
        caption = "Source: the Colorado Department of Revenue",
        fill = "Sales type") +
+  # Adjust x axis on top
   scale_x_continuous(expand = c(0, 0), position = "top") +
   theme(
     # Adjust title and caption position align with the plot
@@ -75,6 +76,7 @@ total_sales_bar_plot <- ggplot(combined_county_longer) +
   guides(fill = guide_legend(title.position = "left",
                               title.theme = element_text(hjust = 0, size = 7.5,
                                                          family = "Econ Sans Cnd Medium")))
+
 # Open file to store the plot
 png("plots/figure/total-sale-bar-plot.png",
     width = 290*3, height = 290/2*3*3, units = "px", res = 300)
