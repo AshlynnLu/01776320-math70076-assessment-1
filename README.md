@@ -1,4 +1,3 @@
-# mat70076-assessment-1
 # Legal cannabis sales reports
 
 This project is to create an article of 200-300 words with 4 supporting data visualisations for analysing cannabis sales report data in Colorado. 
